@@ -11,14 +11,34 @@
     var firstTrain = 0;
     var frequency = 0;
     var list= [];
-    var time = new Date();
-    var h = time.getHours();
-    var m = time.getMinutes();
 
 
-    $("#current-time").text(h +" : " + m);
+      
+    function startTime() 
+        {
+            function checkTime(i) 
+            {
+            if (i < 10) 
+                {
+                i = "0" + i;
+                }
+            return i;
+            }
+        var today = new Date();
+        var h = today.getHours();
+        var m = today.getMinutes();
+        var s = today.getSeconds();
+        // add a zero in front of numbers<10
+        m = checkTime(m);
+        s = checkTime(s);
+        $("#current-time").text("Time: " + h + ":" + m + ":" + s )
+        t = setTimeout(function() 
+            {startTime()}, 500);
+        }
+    startTime();
 
-    
+
+
 
 
 
@@ -41,7 +61,7 @@ $("#run-search").on("click", function(event)
     console.log("First Train : " + first);
     console.log("Frequency : " + freq);
 
-    var minAway = parseInt(first) + parseInt(freq)
+    //var minAway = parseInt(first) + parseInt(freq)
 
     
     list.push(name);
@@ -51,12 +71,26 @@ $("#run-search").on("click", function(event)
     list.push(time);
 
     console.log(list);
-    render(list);
+    //render(list);
 
-    //$("#train-section").prepend("<td>"+name+"</td>"+"<td>"+dest+"</td>"+"<td>"+first+"</td>"+"<td>"+freq+"</td>"+"<td>"+20 +"</td>");
+    localStorage.setItem("train", name);
+    localStorage.setItem("dest", dest);
+    localStorage.setItem("first", first);
+    localStorage.setItem("freq", freq);
+
+
     });
+    var sTrain = localStorage.getItem("train");
+    var sDest = localStorage.getItem("dest");
+    var sFirst = localStorage.getItem("first");
+    var sFreq = localStorage.getItem("freq");
+
+    localStorage.setItem("train-list", JSON.stringify(list));
+
+    $("#train-section").prepend("<td>"+"<button>"+" X "+"</button>"+sTrain+"</td>"+"<td>"+sDest+"</td>"+"<td>"+sFreq+"</td>"+"<td>"+sFirst+"</td>"+"<td>"+20 +"</td>");
 
 
+//list = JSON.parse(localStorage.getItem("train-list"));
 
 
 
@@ -64,13 +98,18 @@ function render(list)
    {
     for( var i = 0; i<list.length; i++)
         {
-            //$("#train-section").empty();
-
+           // $("#train-section").empty();
+           
             var td = $("<td>");
             td.text(list[i]);
 
+            //var removeBtn = $("<button>");
+            //removeBtn.addClass("remove");
+            //removeBtn.text("✓");
+
+            //td = td.prepend(removeBtn);
             $("#train-section").append(td);
         };
    };
 
- 
+ //render(list);
