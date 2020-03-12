@@ -17,8 +17,57 @@
   </head>
 
   <body>
- 
- 
+   <div class="container">
+    <div class="jumbotron" style="background-color: #20315A ; color: white;">
+      <h1 class="text-center">
+        <strong>Anytime is Train Time</strong>
+        <h6 class="text-center">Choo Choo. Chee Chee.</h6>
+      </h1>
+    </div>
+    <div class="row">
+      <div class="col-sm-12">
+        <br>
+        <div class="card">
+          <div class="card-header" style="background-color: #20315A ; color: white;">
+            <strong>Current Train Schedule</strong>
+          </div>
+          <div class="card-body" id="article-section">
+          </div>
+        </div>
+      </div>
+    </div>
+   <div class="row">
+    <div class="col-sm-12">
+      <br>
+      <div class="card">
+        <div class="card-header" style="background-color: #20315A ; color: white;">
+          <strong> Add Train</strong>
+        </div>
+        <div class="card-body">
+          <form role="form">
+            <div class="form-group" >
+              <label for="train">Train Name</label>
+              <input type="text" class="form-control" id="trainName">
+            </div>
+            <div class="form-group">
+                <label for="destination">Destination</label>
+                <input type="text" class="form-control" id="destination">
+              </div>
+            <div class="form-group">
+              <label for="time">First Train Time(hh:mm - Military Time)</label>
+              <input type="text" class="form-control" id="time">
+            </div>
+            <div class="form-group">
+              <label for="frequency">Frequency (min)</label>
+              <input type="text" class="form-control" id="frequency">
+            </div>
+            <button type="submit" class="btn btn-primary" id="run-search">Summit</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
     
  
     
