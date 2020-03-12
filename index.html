@@ -1,84 +1,95 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <head>
+        <!-- Required meta tags -->
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    <!-- Added link to the jQuery Library -->
-    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
-    
+        <!-- Added link to the jQuery Library -->
+        <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+        
 
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="./assets/css/reset.css">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-    <link rel="stylesheet" href="./assets/css/styles.css">
-    <title>Train Scheduler</title>
-  </head>
+        <!-- Bootstrap CSS -->
+        <link rel="stylesheet" href="./assets/css/reset.css">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+        <link rel="stylesheet" href="./assets/css/styles.css">
+        <title>Train Scheduler</title>
+    </head>
 
-  <body>
-   <div class="container">
-    <div class="jumbotron" style="background-color: #20315A ; color: white;">
-      <h1 class="text-center">
-        <strong>Anytime is Train Time</strong>
-        <h6 class="text-center">Choo Choo. Chee Chee.</h6>
-      </h1>
-    </div>
-    <div class="row">
-      <div class="col-sm-12">
-        <br>
-        <div class="card">
-          <div class="card-header" style="background-color: #20315A ; color: white;">
-            <strong>Current Train Schedule</strong>
-          </div>
-          <div class="card-body" id="article-section">
-          </div>
+<body>
+    <div class="container">
+        <div class="jumbotron" style="background-color: #20315A ; color: white;">
+            <h1 class="text-center">
+                <strong>Anytime is Train Time</strong>
+                <h6 class="text-center">Choo Choo. Chee Chee.</h6>
+                <hr>
+                <h6 class="float-right" id="current-time">Current time 00:00</h6>
+            </h1>
         </div>
-      </div>
-    </div>
-   <div class="row">
-    <div class="col-sm-12">
-      <br>
-      <div class="card">
-        <div class="card-header" style="background-color: #20315A ; color: white;">
-          <strong> Add Train</strong>
+        <div class="row">
+            <div class="col-sm-12">
+                <br>
+                <div class="card">
+                    <div class="card-header" style="background-color: #20315A ; color: white;">
+                        <strong>Current Train Schedule</strong>
+                    </div>
+                    <div class="card-body">
+                        <table class="table table-striped" >
+                            <thead>
+                              <tr>
+                                <th scope="col">Train Name</th>
+                                <th scope="col">Destination</th>
+                                <th scope="col">Frequency (min)</th>
+                                <th scope="col">Next Arrival</th>
+                                <th scope="col">Minutes Away</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              <tr id="train-section">
+                                    
+                              </tr>
+                            </tbody>
+                          </table>
+                    </div>
+                </div>
+            </div>
         </div>
-        <div class="card-body">
-          <form role="form">
-            <div class="form-group" >
-              <label for="train">Train Name</label>
-              <input type="text" class="form-control" id="trainName">
+        <div class="row">
+            <div class="col-sm-12">
+            <br>
+            <div class="card">
+                <div class="card-header" style="background-color: #20315A ; color: white;">
+                    <strong> Add Train</strong>
+                </div>
+                <div class="card-body">
+                    <form role="form">
+                        <div class="form-group" >
+                            <label for="train">Train Name</label>
+                            <input type="text" class="form-control" id="trainName">
+                        </div>
+                        <div class="form-group">
+                            <label for="destination">Destination</label>
+                            <input type="text" class="form-control" id="destination">
+                        </div>
+                        <div class="form-group">
+                            <label for="time">First Train Time(hh:mm - Military Time)</label>
+                            <input type="text" class="form-control" id="time">
+                        </div>
+                        <div class="form-group">
+                            <label for="frequency">Frequency (min)</label>
+                            <input type="text" class="form-control" id="frequency">
+                        </div>
+                        <button type="submit" class="btn btn-primary" id="run-search">Summit</button>
+                     </form>
+                </div>
             </div>
-            <div class="form-group">
-                <label for="destination">Destination</label>
-                <input type="text" class="form-control" id="destination">
-              </div>
-            <div class="form-group">
-              <label for="time">First Train Time(hh:mm - Military Time)</label>
-              <input type="text" class="form-control" id="time">
             </div>
-            <div class="form-group">
-              <label for="frequency">Frequency (min)</label>
-              <input type="text" class="form-control" id="frequency">
-            </div>
-            <button type="submit" class="btn btn-primary" id="run-search">Summit</button>
-          </form>
         </div>
-      </div>
     </div>
-  </div>
-</div>
-    
- 
-    
-      
-      
-      
 
-
-    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="./assets/javascript/app.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
-  </body>
+<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+<script src="./assets/javascript/app.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+</body>
 </html>
