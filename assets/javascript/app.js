@@ -1,115 +1,88 @@
-/* 
+var config = 
+    {
+    apiKey: "AIzaSyD26xyAX0PqXwvhpgHNtrji9Mxnq2l5jxU",
+    authDomain: "my-first-78dfe.firebaseapp.com",
+    databaseURL: "https://my-first-78dfe.firebaseio.com",
+    projectId: "my-first-78dfe",
+    storageBucket: "my-first-78dfe.appspot.com",
+    };
   
-* Consider updating your "minutes to arrival" and "next train time" text once every minute. This is significantly more challenging; only attempt this if you've completed the actual activity and committed it somewhere on GitHub for safekeeping (and maybe create a second GitHub repo).
-
-* Try adding `update` and `remove` buttons for each train. Let the user edit the row's elements-- allow them to change a train's Name, Destination and Arrival Time (and then, by relation, minutes to arrival).
-
-* As a final challenge, make it so that only users who log into the site with their Google or GitHub accounts can use your site. You'll need to read up on Firebase authentication for this bonus exercise.
-*/
-    var trainName = "";
-    var destination = "" ;
-    var firstTrain = 0;
-    var frequency = 0;
-    var list= [];
+firebase.initializeApp(config);
+  
+  
+// Create a variable to reference the database
+var database = firebase.database();
 
 
-      
-    function startTime() 
-        {
-            function checkTime(i) 
-            {
-            if (i < 10) 
-                {
-                i = "0" + i;
-                }
-            return i;
-            }
-        var today = new Date();
-        var h = today.getHours();
-        var m = today.getMinutes();
-        var s = today.getSeconds();
-        // add a zero in front of numbers<10
-        m = checkTime(m);
-        s = checkTime(s);
-        $("#current-time").text("Time: " + h + ":" + m + ":" + s )
-        t = setTimeout(function() 
-            {startTime()}, 500);
-        }
-    startTime();
+var name = "";
+var desti = "" ;
+var first = "";
+var freq = 0;
 
 
 
+function currentTime() 
+    {
+    var current = moment().format("hh:mm");
+    $("#current-time").html(current);
+    setTimeout(currentTime, 1000);
+    };
 
-
-
-
-
-
+currentTime();
 
 
 $("#run-search").on("click", function(event) 
     {
     event.preventDefault();
 
-    var name = $("#trainName").val();
-    var dest = $("#destination").val();
-    var first = $("#time").val();
-    var freq = $("#frequency").val();
+    var name = $("#trainName").val().trim();
+    var desti = $("#destination").val().trim();
+    var first = $("#time").val().trim();
+    var freq = $("#frequency").val().trim();
 
     console.log("Train Name : " + name);
-    console.log("Destination : " + dest);
+    console.log("Destination : " + desti);
     console.log("First Train : " + first);
     console.log("Frequency : " + freq);
 
-    //var minAway = parseInt(first) + parseInt(freq)
+    database.ref().push(
+        {
+        name : name,
+        desti : desti,
+        first : first,
+        freq : freq,
+        dateAdded: firebase.database.ServerValue.TIMESTAMP
+        });
+    });
+
+
 
     
-    list.push(name);
-    list.push(dest);
-    list.push(first);
-    list.push(freq);
-    list.push(time);
-
-    console.log(list);
-    //render(list);
-
-    localStorage.setItem("train", name);
-    localStorage.setItem("dest", dest);
-    localStorage.setItem("first", first);
-    localStorage.setItem("freq", freq);
-
-
-    });
-    var sTrain = localStorage.getItem("train");
-    var sDest = localStorage.getItem("dest");
-    var sFirst = localStorage.getItem("first");
-    var sFreq = localStorage.getItem("freq");
-
-    localStorage.setItem("train-list", JSON.stringify(list));
-
-    $("#train-section").prepend("<td>"+"<button>"+" X "+"</button>"+sTrain+"</td>"+"<td>"+sDest+"</td>"+"<td>"+sFreq+"</td>"+"<td>"+sFirst+"</td>"+"<td>"+20 +"</td>");
-
-
-//list = JSON.parse(localStorage.getItem("train-list"));
 
 
 
-function render(list)
-   {
-    for( var i = 0; i<list.length; i++)
-        {
-           // $("#train-section").empty();
-           
-            var td = $("<td>");
-            td.text(list[i]);
+database.ref().on("child_added", function(response)
+    {
+        var fConverted = moment(response.val().first, "hh:mm").subtract(1, "years");
+        var tDiff = moment().diff(moment(fConverted), "minutes");
+        var tRemain = tDiff % response.val().freq;
+        var arrival = response.val().freq - tRemain;
+        var nextTrain = moment().add(arrival, "minutes");
 
-            //var removeBtn = $("<button>");
-            //removeBtn.addClass("remove");
-            //removeBtn.text("✓");
 
-            //td = td.prepend(removeBtn);
-            $("#train-section").append(td);
-        };
-   };
 
- //render(list);
+
+        var newRow = $("<tr>");
+        newRow.append($("<td>" + response.val().name + "</td>"));
+        newRow.append($("<td>" + response.val().desti + "</td>"));
+        newRow.append($("<td>" + response.val().freq + "</td>"));
+        newRow.append($("<td>" + moment(nextTrain).format("LT") + "</td>"));
+        newRow.append($("<td>" + arrival + "</td>"));
+
+        $("#train-section").prepend(newRow);
+
+
+        //$("#train-section").prepend("<tr>"+"<td>"+"<span>"+"<button>"+" X "+"</button>"+"</span>"+sTrain+"</td>"+"<td>"+sDest+"</td>"+"<td>"+sFreq+"</td>"+"<td>"+sFirst+"</td>"+"<td>"+nextTrain +"</td>"+"</tr>");
+
+
+    })
