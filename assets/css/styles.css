@@ -1,0 +1,35 @@
+body
+    {
+    background-image: url("../images/bg-faded.jpg");
+    }
+
+.card-body
+    {
+    background-image: url("../images/bg-morefaded.jpg");
+    background-size: 100% 100%;
+    }
+#current-time
+    {
+    font-size: 40px;
+    }
+
+#train-section
+    {
+    font-size: 25px;  
+    }
+
+.card-header
+    {
+    background-image: url("../images/train.jpg");
+    color: white;
+    text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
+    }
+
+.jumbotron
+    {
+    background-image: url("../images/train.jpg");
+    background-size: 100% 100%;
+    text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
+    background-repeat: no-repeat;
+    color: white;
+    }
